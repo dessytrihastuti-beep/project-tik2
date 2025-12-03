@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dashboard - Boba Viscosity</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+<div class="brand">
+<img src="logo-ipb.png" alt="Logo IPB" class="logo">
+<div class="brand-text"><h1 class="site-title small">Dashboard</h1></div>
+</div>
+<nav class="nav"><a href="index.html" class="nav-link">Home</a><a href="profil.html" class="nav-link">Profil</a></nav>
+</header>
+
+
+<main class="container">
+<section class="card">
+<h2>Dasbor Interaktif</h2>
+<p class="small muted">Embedded Power BI report — ganti `EMBED_URL` dan penanganan token di server.</p>
+
+
+<!-- Power BI embed iframe: replace EMBED_URL with the Power BI publish/embed url
+For secure refresh via REST API, call your server endpoint (see README). -->
+<div class="card embed-card">
+<iframe id="powerbi-frame" src="https://app.powerbi.com/reportEmbed?reportId=a6893831-92fc-44ee-a8a1-30b9c0159807&autoAuth=true&ctid=fedd5298-8e66-45f1-b321-fd38ad0ff722" frameborder="0" allowfullscreen></iframe>
+</div>
+
+
+<div style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+<button id="refresh-dataset" class="btn">Refresh Dataset (trigger server)</button>
+<button id="open-powerbi" class="btn">Buka di jendela baru</button>
+</div>
+
+
+</section>
+</main>
+
+
+<footer class="footer">© 2025</footer>
+<script>
+document.getElementById('open-powerbi').addEventListener('click', ()=>{
+const url = document.getElementById('powerbi-frame').src;
+window.open(url,'_blank');
+});
+
+
+document.getElementById('refresh-dataset').addEventListener('click', async ()=>{
+// Calls server endpoint to trigger Power BI REST API dataset refresh
+try{
+const res = await fetch('/api/refresh-powerbi',{method:'POST'});
+if(res.ok) alert('Permintaan refresh berhasil dikirim'); else alert('Refresh gagal: '+res.statusText);
+}catch(e){alert('Error: '+e.message)}
+});
+</script>
+</body>
+</html>

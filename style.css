@@ -1,0 +1,140 @@
+:root{
+--card:#ffffff;
+--accent1: #ffd6e8;
+--accent2: #fbe6c6;
+--purple:#7a3b59;
+--muted:#7a6a78;
+--glass: rgba(255,255,255,0.7);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:linear-gradient(180deg,var(--bg),#fff);color:var(--purple)}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:var(--glass);backdrop-filter:blur(6px);position:sticky;top:0;z-index:50}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:56px;height:56px;object-fit:contain;border-radius:10px}
+.brand-text .site-title{margin:0;font-size:16px;line-height:1}
+.brand-text .muted{font-size:12px;color:var(--muted)}
+.nav{display:flex;align-items:center;gap:10px}
+.nav-link{padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--purple);font-weight:600}
+.nav-link.active{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#4a2b3a}
+.container{max-width:1100px;margin:22px auto;padding:0 18px}
+.card{background:var(--card);padding:16px;border-radius:16px;box-shadow:0 8px 30px rgba(120,80,120,0.06);margin-bottom:16px}
+.hero{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start}
+@media(max-width:920px){.hero{grid-template-columns:1fr}.hero-right{order:2}}
+.title-card h2{margin:6px 0 8px;font-size:20px}
+.lead{color:var(--muted);margin:0}
+.boba-row{display:flex;gap:8px;margin-top:10px}
+.boba{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#ffd4e0,#ffd6b8);box-shadow:0 8px 18px rgba(200,120,160,0.08)}
+.slideshow{position:relative;overflow:hidden;border-radius:12px;height:260px}
+.slides{display:flex;width:200%;height:260px;transition:transform 0.8s ease}
+.slides img{width:100%;height:260px;object-fit:cover}
+.slideshow-controls{position:absolute;right:12px;bottom:12px;display:flex;gap:8px}
+.slideshow-controls button{background:rgba(255,255,255,0.9);border-radius:8px;padding:6px;border:0}
+.hero-right .stat-grid{display:flex;gap:8px;flex-direction:column}
+.stat{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;background:linear-gradient(90deg,#fff,#fff);box-shadow:0 6px 18px rgba(120,90,120,0.04)}
+.num{font-weight:700}
+.cards-row{display:flex;gap:12px;margin-top:10px}
+@media(max-width:900px){.cards-row{flex-direction:column}}
+.feature{flex:1}
+.btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:0;padding:10px 14px;border-radius:12px;color:#4a2b3a;cursor:pointer}
+.btn-ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:8px 12px;border-radius:10px;cursor:pointer}
+.small{font-size:13px}
+.muted{color:var(--muted)}
+.footer{text-align:center;padding:18px;color:var(--muted)}
+.embed-card iframe{width:100%;height:520px;border-radius:12px;border:0}
+.profile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.profile-card{text-align:center;padding:14px}
+.profile-photo{width:100%;height:160px;object-fit:cover;border-radius:12px;margin-bottom:8px}
+.form-row{margin-bottom:8px;text-align:left}
+.form-row label{display:block;font-size:13px;margin-bottom:6px}
+.form-row input,.form-row textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #eee}
+.bubble-bg{position:fixed;left:0;right:0;bottom:0;top:0;pointer-events:none;overflow:hidden}
+.bubble{position:absolute;border-radius:50%;opacity:0.18}
+
+.lead {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-top: 20px;
+    text-align: justify;   /* Rata kanan kiri */
+}
+
+
+/* responsive tweaks */
+@media(max-width:520px){.brand-text .site-title{font-size:14px}}
+
+/* ======== Estetik Slideshow Boba ======== */
+
+.slideshow.aesthetic {
+    position: relative;
+    width: 100%;
+    max-width: 550px;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 24px;
+    box-shadow: 0 8px 25px rgba(255, 179, 216, 0.35);
+    background: #ffe6f3;
+    margin-bottom: 25px; /* memberi jarak antara slideshow dan teks */
+}
+
+.fade-slides {
+    position: relative;
+    width: 100%;
+}
+
+.slide-item {
+    width: 100%;
+    border-radius: 24px;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.slide-item.active {
+    opacity: 1;
+}
+
+/* Tombol Boba */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 204, 230, 0.8);
+    border: none;
+    padding: 12px 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(255, 140, 180, 0.4);
+}
+
+.nav-btn:hover {
+    background: #ffb3d9;
+    transform: translateY(-50%) scale(1.15);
+}
+
+.prev { left: 12px; }
+.next { right: 12px; }
+
+/* Dots Indicator */
+.dots {
+    position: absolute;
+    bottom: 12px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background: #ffd6ea;
+    border-radius: 50%;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.dot.active {
+    background: #ff99cc;
+    transform: scale(1.3);
+}
