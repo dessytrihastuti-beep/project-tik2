@@ -1,25 +1,95 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feedback</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - Pengaruh Viskositas Boba</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-<header><h1 class="judul">Feedback</h1></header>
+<body class="slide-in-start">
+    <!-- Topbar (Diambil dari index.html agar konsisten) -->
+    <header class="topbar">
+        <div class="brand">
+            <!-- Asumsi Logo dan Brand Text diambil dari index.html -->
+            <img src="Logo-IPB-University_Vertical.png"Logo IPB University" class="logo">
+            <div class="brand-text">
+                <h1 class="site-title">IPB University</h1>
+                <p class="muted">Pengaruh Viskositas Boba Pati Singkong</p>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="profil.html" class="nav-link">Profil</a>
+            <a href="#" class="nav-link active">Feedback</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Kartu Feedback Utama -->
+        <!-- Menggunakan class 'card' dan 'feedback-card' untuk styling -->
+        <div class="card feedback-card">
+            <h1>Feedback (˶ᵔ ᵕ ᵔ˶)</h1>
 
 
-<section class="feedback-box">
-<input type="email" id="email" placeholder="Email" required>
-<textarea id="pesan" placeholder="Masukkan feedback..." required></textarea>
-<button onclick="kirimFeedback()">Kirim</button>
-</section>
+            <form>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <!-- Menghilangkan 'required' untuk contoh ini, tapi Anda bisa menambahkannya kembali -->
+                    <input type="email" id="email" placeholder="Masukkan email kamu...">
+                </div>
 
+                <div class="form-group">
+                    <label for="message">Pesan</label>
+                    <textarea id="message" rows="4" placeholder="Masukkan feedback..."></textarea>
+                </div>
 
-<a href="index.html" class="back">Kembali</a>
+                <!-- Menggunakan class 'submit-button' yang baru dibuat dan style 'btn' -->
+                <button type="submit" class="submit-button btn-kirim">Kirim</button>
+            </form>
 
+            <a href="index.html" class="link-kembali">Kembali ke Beranda</a>
+        </div>
+    </div>
 
-<script src="script.js"></script>
+    <!-- Footer (Diambil dari index.html agar konsisten) -->
+    <footer class="footer">
+        © 2025 • Proyek: PENGARUH VISKOSITAS BOBA PATI SINGKONG TERHADAP PREFERENSI MASYARAKAT
+    </footer>
+    
+    <!-- Script Transisi (Asumsi ada di file lain, tapi penting untuk konsistensi) -->
+    <script>
+        // Fungsi untuk menangani transisi halaman saat link diklik
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hapus kelas 'slide-in-start' setelah transisi masuk selesai
+            const body = document.body;
+            body.classList.remove('slide-in-start');
+            
+            document.querySelectorAll('a[href^="http"]:not([href*="' + window.location.host + '"]), a[href*=".html"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (this.hostname === window.location.hostname || this.href.endsWith('.html') || this.href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetUrl = this.getAttribute('href');
+                        
+                        body.classList.add('slide-out');
+                        
+                        // Tunggu hingga animasi slide-out selesai sebelum navigasi
+                        setTimeout(() => {
+                            window.location.href = targetUrl;
+                        }, 600); // Harus sesuai dengan durasi transisi di CSS
+                    }
+                });
+            });
+        });
+
+        // Script dasar untuk mencegah pengiriman form dan menampilkan pesan
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Implementasi modal kustom di sini jika Anda memilikinya, 
+            // atau cukup berikan feedback di konsol/UI
+            alert('Terima kasih atas feedback Anda! (Simulasi Kirim)');
+        });
+    </script>
 </body>
 </html>
