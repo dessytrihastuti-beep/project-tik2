@@ -1,68 +1,255 @@
 :root{
---card:#ffffff;
---accent1: #ffd6e8;
+--card:#ffe9e3;
+--accent1: #d889bd;
 --accent2: #fbe6c6;
 --purple:#7a3b59;
 --muted:#7a6a78;
 --glass: rgba(255,255,255,0.7);
+/* GRADASI PINK BARU: Mulai dengan pink muda (#FFDCDC) */
+--bg: #ffeded; 
+/* Tambahkan variabel pink yang lebih kuat untuk gradasi di Topbar/Footer */
+--pink-light: #ffe6f0; 
+--pink-strong: #ffc2d6;
 }
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:linear-gradient(180deg,var(--bg),#fff);color:var(--purple)}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:var(--glass);backdrop-filter:blur(6px);position:sticky;top:0;z-index:50}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:56px;height:56px;object-fit:contain;border-radius:10px}
-.brand-text .site-title{margin:0;font-size:16px;line-height:1}
-.brand-text .muted{font-size:12px;color:var(--muted)}
-.nav{display:flex;align-items:center;gap:10px}
-.nav-link{padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--purple);font-weight:600}
-.nav-link.active{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#4a2b3a}
-.container{max-width:1100px;margin:22px auto;padding:0 18px}
-.card{background:var(--card);padding:16px;border-radius:16px;box-shadow:0 8px 30px rgba(120,80,120,0.06);margin-bottom:16px}
-.hero{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start}
-@media(max-width:920px){.hero{grid-template-columns:1fr}.hero-right{order:2}}
-.title-card h2{margin:6px 0 8px;font-size:20px}
-.lead{color:var(--muted);margin:0}
-.boba-row{display:flex;gap:8px;margin-top:10px}
-.boba{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#ffd4e0,#ffd6b8);box-shadow:0 8px 18px rgba(200,120,160,0.08)}
-.slideshow{position:relative;overflow:hidden;border-radius:12px;height:260px}
-.slides{display:flex;width:200%;height:260px;transition:transform 0.8s ease}
-.slides img{width:100%;height:260px;object-fit:cover}
-.slideshow-controls{position:absolute;right:12px;bottom:12px;display:flex;gap:8px}
-.slideshow-controls button{background:rgba(255,255,255,0.9);border-radius:8px;padding:6px;border:0}
-.hero-right .stat-grid{display:flex;gap:8px;flex-direction:column}
-.stat{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;background:linear-gradient(90deg,#fff,#fff);box-shadow:0 6px 18px rgba(120,90,120,0.04)}
-.num{font-weight:700}
-.cards-row{display:flex;gap:12px;margin-top:10px}
-@media(max-width:900px){.cards-row{flex-direction:column}}
-.feature{flex:1}
-.btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:0;padding:10px 14px;border-radius:12px;color:#4a2b3a;cursor:pointer}
-.btn-ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:8px 12px;border-radius:10px;cursor:pointer}
-.small{font-size:13px}
-.muted{color:var(--muted)}
-.footer{text-align:center;padding:18px;color:var(--muted)}
-.embed-card iframe{width:100%;height:520px;border-radius:12px;border:0}
-.profile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
-.profile-card{text-align:center;padding:14px}
-.profile-photo{width:100%;height:160px;object-fit:cover;border-radius:12px;margin-bottom:8px}
-.form-row{margin-bottom:8px;text-align:left}
-.form-row label{display:block;font-size:13px;margin-bottom:6px}
-.form-row input,.form-row textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #eee}
-.bubble-bg{position:fixed;left:0;right:0;bottom:0;top:0;pointer-events:none;overflow:hidden}
-.bubble{position:absolute;border-radius:50%;opacity:0.18}
 
-.lead {
+/* --- BASE STYLES --- */
+html,body{
+    /* PERBAIKAN STICKY FOOTER: Ganti height:100% dengan min-height:100vh dan tambahkan flexbox */
+    min-height:100vh;
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    /* PERUBAHAN: Gradasi linear dari pink muda ke putih */
+    background:linear-gradient(180deg,var(--bg),#ffffff);
+    color:var(--purple);
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+    
+    transform: translateY(0); 
+    opacity: 1; 
+    
+    /* Flexbox untuk mendorong footer ke bawah */
+    display: flex;
+    flex-direction: column;
+}
+
+/* KODE UNTUK TRANSISI KELUAR HALAMAN (Slide UP) - TIDAK BERUBAH */
+body.slide-out {
+    opacity: 0;
+    /* Efek slide UP: menggeser seluruh body 100% tinggi viewport ke atas */
+    transform: translateY(-100vh);
+}
+
+/* KODE BARU UNTUK POSISI AWAL TRANSISI MASUK (Digunakan JS saat load) */
+body.slide-in-start {
+    opacity: 0;
+    /* Halaman baru dimulai dari bawah */
+    transform: translateY(100vh);
+}
+
+/* --- TOPBAR / NAVIGATION --- */
+.topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 20px;
+    /* PERUBAHAN: Latar belakang gradasi pink untuk Topbar */
+    background:linear-gradient(90deg, var(--pink-strong), var(--pink-light));
+    /* Hapus backdrop-filter karena sekarang memiliki background yang solid */
+    /* backdrop-filter:blur(6px); */
+    position:sticky;
+    top:0;
+    z-index:50;
+    /* Tambahkan bayangan agar lebih menonjol */
+    box-shadow: 0 2px 10px rgba(255, 160, 200, 0.3);
+}
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+.logo{
+    width:56px;
+    height:56px;
+    object-fit:contain;
+    border-radius:10px;
+}
+.brand-text .site-title{
+    margin:0;
+    font-size:16px;
+    line-height:1;
+}
+.brand-text .muted{
+    font-size:12px;
+    color:var(--muted);
+}
+.nav{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+.nav-link{
+    padding:8px 12px;
+    border-radius:10px;
+    text-decoration:none;
+    color:var(--purple);
+    font-weight:600;
+}
+.nav-link.active{
+    background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    color:#4a2b3a;
+}
+.container{
+    max-width:1100px;
+    margin:22px auto;
+    padding:0 18px;
+    /* Tambahkan flex-grow agar container mengisi ruang kosong dan mendorong footer ke bawah */
+    flex-grow: 1;
+}
+
+/* --- GENERAL UI ELEMENTS --- */
+.card{
+    background:var(--card);
+    padding:16px;
+    border-radius:16px;
+    box-shadow:0 8px 30px rgba(120,80,120,0.06);
+    /* PERBAIKAN: Tambahkan margin bawah yang lebih besar agar tidak menabrak footer */
+    margin-bottom:30px; 
+}
+.hero{
+    display:grid;
+    grid-template-columns:1fr 360px;
+    gap:18px;
+    align-items:start;
+}
+@media(max-width:920px){
+    .hero{grid-template-columns:1fr}
+    .hero-right{order:2}
+}
+.title-card h2{
+    margin:6px 0 8px;
+    font-size:20px;
+    /* MENENGAHKAN TEKS JUDUL DI INDEX.HTML */
+    text-align: center; 
+}
+.lead{
+    color:var(--muted);
+    margin:0;
     font-size: 0.9rem;
     line-height: 1.4;
     margin-top: 20px;
-    text-align: justify;   /* Rata kanan kiri */
+    text-align: justify; 
+}
+.boba-row{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+}
+.boba{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(180deg,#ffd4e0,#ffd6b8);
+    box-shadow:0 8px 18px rgba(200,120,160,0.08);
 }
 
+/* --- BUTTONS --- */
+.btn{
+    background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    border:0;
+    padding:10px 14px;
+    border-radius:12px;
+    color:#4a2b3a;
+    cursor:pointer;
+}
+.btn-ghost{
+    background:transparent;
+    border:1px solid rgba(0,0,0,0.06);
+    padding:8px 12px;
+    border-radius:10px;
+    cursor:pointer;
+}
 
-/* responsive tweaks */
-@media(max-width:520px){.brand-text .site-title{font-size:14px}}
+/* --- FOOTER --- */
+.small{
+    font-size:18px;
+}
+.muted{
+    color:var(--muted);
+}
+.footer{
+    text-align:center;
+    padding:18px;
+    color:var(--muted);
+    /* PERUBAHAN: Latar belakang gradasi pink untuk Footer */
+    background:linear-gradient(90deg, var(--pink-light), var(--pink-strong));
+    /* Tambahkan margin-top negatif untuk menghilangkan potensi celah antara konten dan footer */
+    margin-top: -1px;
+}
+.embed-card iframe{
+    width:100%;
+    height:520px;
+    border-radius:12px;
+    border:0;
+}
 
-/* ======== Estetik Slideshow Boba ======== */
+/* --- PROFILE GRID --- */
+.profile-grid{
+    /* Aturan Grid untuk membuat tata letak horizontal dan responsif */
+    display:grid;
+    /* PENYESUAIAN: Minimum lebar dikurangi menjadi 180px agar lebih mudah masuk ke 2 atau 3 kolom pada layar yang lebih kecil, menjaganya tetap menyamping. */
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:20px; /* Jarak antar kartu lebih luas untuk estetika */
+}
+.profile-card{
+    text-align:center;
+    padding:14px;
+}
+.profile-photo{
+    width:100%;
+    height:160px;
+    object-fit:cover;
+    border-radius:12px;
+    margin-bottom:8px;
+}
 
+/* --- SLIDESHOW STYLES --- */
+.slideshow{
+    position:relative;
+    overflow:hidden;
+    border-radius:12px;
+    /* PENYESUASAN: TINGGI DITINGKATKAN (misalnya, dari 260px) */
+    height:380px; 
+}
+.slides{
+    display:flex;
+    width:200%;
+    /* PENYESUASAN: TINGGI DITINGKATKAN */
+    height:380px;
+    transition:transform 0.8s ease;
+}
+.slides img{
+    width:100%;
+    /* PENYESUASAN: TINGGI DITINGKATKAN */
+    height:380px;
+    object-fit:cover;
+}
+.slideshow-controls{
+    position:absolute;
+    right:12px;
+    bottom:12px;
+    display:flex;
+    gap:8px;
+}
+.slideshow-controls button{
+    background:rgba(255,255,255,0.9);
+    border-radius:8px;
+    padding:6px;
+    border:0;
+}
+
+/* Estetik Slideshow Boba */
 .slideshow.aesthetic {
     position: relative;
     width: 100%;
@@ -72,7 +259,7 @@ html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:linea
     border-radius: 24px;
     box-shadow: 0 8px 25px rgba(255, 179, 216, 0.35);
     background: #ffe6f3;
-    margin-bottom: 25px; /* memberi jarak antara slideshow dan teks */
+    margin-bottom: 25px;
 }
 
 .fade-slides {
@@ -92,7 +279,6 @@ html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:linea
     opacity: 1;
 }
 
-/* Tombol Boba */
 .nav-btn {
     position: absolute;
     top: 50%;
@@ -115,7 +301,6 @@ html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:linea
 .prev { left: 12px; }
 .next { right: 12px; }
 
-/* Dots Indicator */
 .dots {
     position: absolute;
     bottom: 12px;
@@ -137,4 +322,369 @@ html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:linea
 .dot.active {
     background: #ff99cc;
     transform: scale(1.3);
+}
+
+/* --- STATS CARD STYLES --- */
+.card.stats {
+    background: #ffd1e8;
+    border: 1px solid #e8a9c9;
+}
+.hero-right .stat-grid{
+    display:flex;
+    gap:8px;
+    flex-direction:column;
+}
+.stat{
+    display:flex;
+    align-items:center;
+    /* PERUBAHAN UTAMA: Ubah dari space-between (default) menjadi flex-start */
+    justify-content: flex-start;
+    /* Tambahkan jarak antara angka dan label */
+    gap: 16px; 
+    
+    padding:10px;
+    border-radius:10px;
+    background:linear-gradient(90deg,#fff,#fff);
+    box-shadow:0 6px 18px rgba(120,90,120,0.04);
+}
+.num{
+    font-weight:700;
+    /* Pastikan angka berada di sebelah kiri */
+    text-align: left; 
+    /* Beri lebar tetap agar semua angka sejajar jika diperlukan (opsional) */
+    /* min-width: 60px; */
+}
+.cards-row{
+    display:flex;
+    gap:2px;
+    margin-top:3px;
+}
+
+@media(max-width:500px){
+    .cards-row{flex-direction:column}
+}
+.feature{
+    flex:1;
+}
+.small-card {
+    background: #ffe3b3;
+    border: 1px solid #e5b778;
+}
+
+/* --- Style untuk kartu feedback di index.html --- */
+.feedback-wide {
+    text-align: center;
+    /* PERBAIKAN FINAL: Pastikan kartu mengambil lebar 100% dari parent (.feature) */
+    width: 100%; 
+    
+    /* GAYA YANG DIPERTAHANKAN */
+    margin-top: 20px; 
+    padding: 8px 16px; 
+    
+    /* Hapus margin auto dan max-width yang menyebabkan penyempitan */
+    margin-left: 0;
+    margin-right: 0;
+    max-width: none;
+}
+
+/* --- DECORATION --- */
+.bubble-bg{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    top:0;
+    pointer-events:none;
+    overflow:hidden;
+}
+.bubble{
+    position:absolute;
+    border-radius:50%;
+    opacity:0.18;
+}
+
+/* responsive tweaks */
+@media(max-width:520px){
+    .brand-text .site-title{font-size:14px}
+}
+
+/* ================================================= */
+/* --- GAYA BARU UNTUK INTERAKTIVITAS DATA --- */
+/* ================================================= */
+
+/* Kontainer untuk Visualisasi/Preferensi */
+.data-section-title {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+    color: var(--purple);
+}
+
+/* Gaya Tab Navigation */
+.tab-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--pink-light);
+}
+
+.tab-button {
+    background: transparent;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--muted);
+    transition: color 0.3s, border-bottom 0.3s;
+    border-bottom: 3px solid transparent;
+}
+
+.tab-button:hover {
+    color: var(--accent1);
+}
+
+.tab-button.active {
+    color: var(--purple);
+    border-bottom: 3px solid var(--accent1);
+}
+
+/* Konten Tab */
+.tab-content {
+    padding: 15px;
+    border-radius: 16px;
+    background: var(--card);
+}
+
+/* Gaya untuk elemen interaktif (Misalnya, kartu yang dapat diklik atau di-hover) */
+.interactive-item {
+    padding: 18px;
+    border-radius: 12px;
+    background-color: var(--glass);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    margin-bottom: 15px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.interactive-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(216, 137, 189, 0.3); /* Bayangan yang lebih menonjol saat di-hover */
+}
+
+.item-title {
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 4px;
+}
+
+.item-description {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+/* ================================================= */
+/* --- GAYA MODAL KUSTOM (Pengganti alert()) --- */
+/* ================================================= */
+#custom-modal {
+    display: none; /* Disembunyikan secara default */
+    position: fixed;
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Background gelap */
+    backdrop-filter: blur(3px);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#custom-modal.visible {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: var(--card);
+    margin: 15% auto; 
+    padding: 25px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(122, 59, 89, 0.2);
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+#custom-modal.visible .modal-content {
+    transform: scale(1);
+}
+
+.modal-content h3 {
+    color: var(--accent1);
+    margin-top: 0;
+    font-size: 1.2rem;
+}
+
+#modal-message {
+    color: var(--purple);
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    background: var(--accent1);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.close-btn:hover {
+    background: #b96b99;
+}
+
+/* --- GAYA BARU UNTUK KARTU KORELASI VISKOSITAS --- */
+.correlation-card {
+    margin-top: 20px;
+    padding: 20px;
+    /* Latar belakang yang lebih terang agar menonjol */
+    background: linear-gradient(135deg, var(--accent2), var(--card)); 
+    border: 2px solid var(--accent1);
+    border-radius: 16px;
+    text-align: center;
+}
+
+.correlation-card h4 {
+    color: var(--purple);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.threshold-indicator {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background: var(--accent1);
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(216, 137, 189, 0.5);
+    margin-top: 10px;
+    /* Efek visual: animasi ringan */
+    animation: pulse-shadow 2s infinite alternate;
+}
+
+@keyframes pulse-shadow {
+    0% {
+        box-shadow: 0 4px 15px rgba(216, 137, 189, 0.5);
+    }
+    100% {
+        box-shadow: 0 8px 25px rgba(216, 137, 189, 0.7);
+    }
+}
+/* ================================================= */
+/* --- GAYA BARU UNTUK FORMULIR FEEDBACK --- */
+/* ================================================= */
+/* Class yang digunakan di feedback.html: .feedback-card */
+.feedback-card {
+    max-width: 500px; /* Batasi lebar agar tidak terlalu lebar di desktop */
+    margin: 40px auto; /* Pusat formulir pada halaman di dalam .container */
+    padding: 30px; /* Padding lebih besar untuk estetika */
+    /* Latar belakang, border-radius, dan shadow diwarisi dari .card */
+}
+
+.feedback-card h1 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: var(--purple);
+}
+
+/* Gaya untuk setiap grup input (label + input) */
+.form-group {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column; /* Label di atas input */
+    gap: 5px; /* Jarak antara label dan input */
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--purple);
+    font-size: 0.95rem;
+}
+
+/* Gaya untuk semua input teks dan textarea */
+.form-group input[type="email"],
+.form-group textarea {
+    padding: 10px 12px;
+    border: 1px solid var(--pink-light);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--purple);
+    background-color: white; /* Latar belakang putih agar jelas */
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%; /* Memastikan lebar penuh */
+    box-sizing: border-box; /* Padding dan border termasuk dalam lebar total */
+}
+
+.form-group textarea {
+    resize: vertical; /* Hanya izinkan resize vertikal */
+    min-height: 120px;
+}
+
+/* Efek saat input difokuskan */
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent1);
+    box-shadow: 0 0 0 3px rgba(216, 137, 189, 0.3);
+}
+
+/* Gaya untuk tombol Kirim (class yang Anda gunakan) */
+.btn-kirim {
+    /* Menggunakan gaya tombol .btn yang sudah ada */
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    color: #4a2b3a;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.3s, transform 0.2s;
+    width: 100%;
+    margin-top: 10px;
+    display: block;
+}
+
+.btn-kirim:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Gaya untuk link Kembali (Kembali ke Beranda) */
+.link-kembali {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px;
+    border-radius: 8px;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.link-kembali:hover {
+    color: var(--purple);
+    background-color: var(--pink-light);
 }
